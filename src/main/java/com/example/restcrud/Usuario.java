@@ -9,12 +9,8 @@ package com.example.restcrud;
  * @author MSWagner
  */
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "user")
@@ -26,7 +22,8 @@ public class Usuario {
     
     @Column
     private String nome;
-
+    @OneToMany(mappedBy = "usuario")
+    private List<Produto> produtos;
     public Long getId() {
         return id;
     }
@@ -42,5 +39,8 @@ public class Usuario {
     public void setNome(String nome) {
         this.nome = nome;
     }
-        
+
+    public List<Produto> getProdutos() {
+        return produtos;
+    }
 }
