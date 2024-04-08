@@ -1,13 +1,8 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
-package com.example.restcrud;
 
-/**
- *
- * @author MSWagner
- */
+package fiap.com.br.Ch1.usuario;
+
+
+import fiap.com.br.Ch1.produto.Produto;
 
 import javax.persistence.*;
 import java.util.List;
@@ -22,6 +17,10 @@ public class Usuario {
     
     @Column
     private String nome;
+
+    @Column
+    private String senha;
+
     @OneToMany(mappedBy = "usuario")
     private List<Produto> produtos;
     public Long getId() {
@@ -42,5 +41,13 @@ public class Usuario {
 
     public List<Produto> getProdutos() {
         return produtos;
+    }
+
+    public String getSenha() {
+        return senha;
+    }
+
+    public void setSenha(String senha) {
+        this.senha = senha;
     }
 }

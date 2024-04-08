@@ -1,13 +1,6 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
-package com.example.restcrud;
 
-/**
- *
- * @author MSWagner
- */
+package fiap.com.br.Ch1.usuario;
+
 
 import org.springframework.web.bind.annotation.*;
 
@@ -16,7 +9,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/usuarios")
-public class RestcrudController {
+public class UsuarioController {
 
     private List<Usuario> usuarios = new ArrayList<>();
 
