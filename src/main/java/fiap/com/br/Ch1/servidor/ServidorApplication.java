@@ -1,9 +1,6 @@
-package com.example.restcrud;
+package fiap.com.br.Ch1.servidor;
 
-/**
- *
- * @author MSWagner
- */
+
 
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.SpringApplication;
@@ -13,10 +10,10 @@ import org.springframework.boot.autoconfigure.orm.jpa.HibernateJpaAutoConfigurat
 
 @SpringBootApplication
 @EnableAutoConfiguration(exclude={DataSourceAutoConfiguration.class, HibernateJpaAutoConfiguration.class})
-public class RestcrudApplication {
+public class ServidorApplication {
     
     public static void main(String[] args) {
-        SpringApplication.run(RestcrudApplication.class, args);
+        SpringApplication.run(ServidorApplication.class, args);
     }
     
 }

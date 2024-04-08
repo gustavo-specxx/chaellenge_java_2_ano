@@ -1,5 +1,6 @@
-package com.example.restcrud;
+package fiap.com.br.Ch1.produto;
 
+import fiap.com.br.Ch1.usuario.Usuario;
 import org.hibernate.annotations.Table;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
@@ -32,5 +33,28 @@ public class Produto {
         return new Produto();
     }
 
-    // getters e setters
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getNome() {
+        return nome;
+    }
+
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
+
+    public String getDescricao() {
+        return descricao;
+    }
+
+    public void setDescricao(String descricao) {
+        this.descricao = descricao;
+    }
+
 }
