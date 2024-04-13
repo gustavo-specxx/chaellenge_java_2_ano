@@ -1,6 +1,6 @@
 package fiap.com.br.Ch1.reclamacoes;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
 import java.util.List;
 
 @Entity

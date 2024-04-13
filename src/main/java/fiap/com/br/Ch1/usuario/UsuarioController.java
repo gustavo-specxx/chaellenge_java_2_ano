@@ -2,6 +2,7 @@
 package fiap.com.br.Ch1.usuario;
 
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -15,11 +16,13 @@ public class UsuarioController {
 
     //Funções CRUD (Create, Read, Update and Delete)
     //Funções PGPD (Post, Get, Put and Delete) - DB
-    
+
     //Função: Read - Geral
+    @Autowired
+    private UsuarioRepository usua;
     @GetMapping
     public List<Usuario> listarUsuarios() {
-        return usuarios;
+        return usua.findAll();
     }
 
     //Função: Create
@@ -37,7 +40,7 @@ public class UsuarioController {
                 .filter(u -> u.getId().equals(id))
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("Usuário não encontrado"));
-        
+
         usuarioExistente.setNome(usuario.getNome());
         // atualize outros atributos se necessário
 

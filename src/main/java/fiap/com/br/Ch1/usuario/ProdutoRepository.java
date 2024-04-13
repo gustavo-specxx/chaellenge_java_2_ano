@@ -1,4 +1,4 @@
-package fiap.com.br.Ch1.produto;
+package fiap.com.br.Ch1.usuario;
 
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;

@@ -2,30 +2,43 @@
 package fiap.com.br.Ch1.usuario;
 
 
-import fiap.com.br.Ch1.produto.Produto;
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
 
-import javax.persistence.*;
 import java.util.List;
 
 @Entity
-@Table(name = "usuario")
+@Table(name = "TB_CADASTRO")
 public class Usuario {
-    
+
     @Id
+    @Column(name="ID_CLIENTE")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    
-    @Column
+
+    @Column(name="EMAIL_CLIENTE")
     private String nome;
 
-    @Column
+    @Column(name="SENHA_CLIENTE")
     private String senha;
 
-    @OneToMany(mappedBy = "usuario")
+    @OneToMany(mappedBy = "usuario", cascade=CascadeType.ALL)
     private List<Produto> produtos;
+
+    public List<Produto> getProdutos() {
+        return produtos;
+    }
+
     public Long getId() {
         return id;
     }
+
 
     public void setId(Long id) {
         this.id = id;
@@ -39,9 +52,7 @@ public class Usuario {
         this.nome = nome;
     }
 
-    public List<Produto> getProdutos() {
-        return produtos;
-    }
+
 
     public String getSenha() {
         return senha;

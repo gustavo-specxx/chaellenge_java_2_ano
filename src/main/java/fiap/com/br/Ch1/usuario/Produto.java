@@ -1,28 +1,36 @@
-package fiap.com.br.Ch1.produto;
+package fiap.com.br.Ch1.usuario;
 
-import fiap.com.br.Ch1.usuario.Usuario;
-import org.hibernate.annotations.Table;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 
-import javax.persistence.*;
 
 @Entity
-@Table(appliesTo = "produto")
+@Table(name = "TB_PRODUTO")
 public class Produto {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name="ID_PRODUTO", insertable=false, updatable=false)
     private Long id;
 
-    @Column
+    @Column(name="NOME_PRODUTO")
     private String nome;
 
-    @Column
+    @Column(name="DESCRICAO_PRODUTO")
     private String descricao;
 
+
+
     @ManyToOne
-    @JoinColumn(name = "usuario_id")
+    @JoinColumn(name = "ID_CLIENTE")
     private Usuario usuario;
 
     private Produto() {
