@@ -18,7 +18,7 @@ public class Produto {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name="ID_PRODUTO", insertable=false, updatable=false)
+    @Column(name="ID_PRODUTO")
     private Long id;
 
     @Column(name="NOME_PRODUTO")
@@ -27,20 +27,15 @@ public class Produto {
     @Column(name="DESCRICAO_PRODUTO")
     private String descricao;
 
-
-
     @ManyToOne
     @JoinColumn(name = "ID_CLIENTE")
-    private Usuario usuario;
+    private Cliente cliente;
 
-    private Produto() {
+    // Construtor padrão
+    public Produto() {
     }
 
-    @Contract(value = " -> new", pure = true)
-    public static @NotNull Produto createProduto() {
-        return new Produto();
-    }
-
+    // Getters e Setters
     public Long getId() {
         return id;
     }
@@ -65,4 +60,11 @@ public class Produto {
         this.descricao = descricao;
     }
 
+    public Cliente getCliente() {
+        return cliente;
+    }
+
+    public void setCliente(Cliente cliente) {
+        this.cliente = cliente;
+    }
 }

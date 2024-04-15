@@ -1,58 +1,66 @@
 package fiap.com.br.Ch1.usuario;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
+import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
 import java.util.ArrayList;
 import java.util.List;
 
 @RestController
-@RequestMapping("/Produto")
-
+@RequestMapping("/produtos")
 public class ProdutoController {
 
     private List<Produto> produtos = new ArrayList<>();
 
+    @Autowired
+    private ProdutoRepository Productrepo;
+
     @GetMapping
-    public List<Produto> listarProdutos() {
-        return produtos;
+    public List<Produto> produtoList(){
+        return StreamSupport.stream(Productrepo.findAll().spliterator(), false)
+                .collect(Collectors.toList());
     }
 
-    //Função: Create
+
+    // Criar Produto
     @PostMapping
     public Produto criarProduto(@RequestBody Produto produto) {
-        produto.setId(generateNextId()); // atribui um ID único
+        produto.setId(generateNextId()); // Atribui um ID único
         produtos.add(produto);
         return produto;
     }
 
-    //Função: Update
+    // Atualizar Produto
     @PutMapping("/{id}")
-    public Produto atualizarUsuario(@PathVariable Long id, @RequestBody Produto produto) {
-        Produto ProdutoExistente = produtos.stream()
-                .filter(u -> u.getId().equals(id))
+    public Produto atualizarProduto(@PathVariable Long id, @RequestBody Produto produto) {
+        Produto produtoExistente = produtos.stream()
+                .filter(p -> p.getId().equals(id))
                 .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("Usuário não encontrado"));
+                .orElseThrow(() -> new IllegalArgumentException("Produto não encontrado"));
 
-        ProdutoExistente.setNome(produto.getNome());
-        // atualize outros atributos se necessário
+        produtoExistente.setNome(produto.getNome());
+        produtoExistente.setDescricao(produto.getDescricao());
+        // Atualize outros atributos, se necessário
 
-        return ProdutoExistente;
+        return produtoExistente;
     }
 
-    //Função: Delete
+    // Excluir Produto
     @DeleteMapping("/{id}")
     public void excluirProduto(@PathVariable Long id) {
-        produtos.removeIf(u -> u.getId().equals(id));
+        produtos.removeIf(p -> p.getId().equals(id));
     }
 
-    //Função: Read - ID específico
+    // Consultar Produto por ID
     @GetMapping("/{id}")
     public Produto consultarProdutoPorId(@PathVariable Long id) {
         return produtos.stream()
-                .filter(u -> u.getId().equals(id))
+                .filter(p -> p.getId().equals(id))
                 .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("Usuário não encontrado"));
+                .orElseThrow(() -> new IllegalArgumentException("Produto não encontrado"));
     }
 
+    // Método privado para gerar o próximo ID
     private Long generateNextId() {
         Long maxId = produtos.stream()
                 .mapToLong(Produto::getId)
@@ -61,5 +69,3 @@ public class ProdutoController {
         return maxId + 1;
     }
 }
-
-
