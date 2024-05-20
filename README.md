@@ -40,30 +40,48 @@ EXEMPLO json:
 
  
  
- 
- 
  lista todos usuarios
  localhost:8081/clientes
  ![image](https://github.com/gustavo-specxx/chaellenge_java_2_ano/assets/117688531/c8a18330-97a7-417d-b6df-b41854f782cd)
+
 
 Lista todos produtos
 localhost:8081/produtos
 ![image](https://github.com/gustavo-specxx/chaellenge_java_2_ano/assets/117688531/ef52967b-7125-46cc-8a9b-8e768031b56c)
 
+
+Cria um novo usuario e verifica se ja esta na base de dados
+Exemplo de json- 
+    {
+        "nome":  "Eduardo",
+        "email": "Eduexp@exp.com",
+        "data_nascimento": "2005-07-02",
+        "genero": "Masculino"
+    }   
 localhost:8081/clientes
 ![image](https://github.com/gustavo-specxx/chaellenge_java_2_ano/assets/117688531/66e28c79-5f0b-4f13-ac54-e2fd415c9b40)
-Cria um novo usuario e verifica se ja esta na base de dados
+
 DELETE:localhost:8081/clientes/ 4
 ![image](https://github.com/gustavo-specxx/chaellenge_java_2_ano/assets/117688531/21474e93-d554-4feb-afae-ce3e0b732854)
 
 Exclui com base no id
 GET:localhost:8081/clientes/ 4
 ![image](https://github.com/gustavo-specxx/chaellenge_java_2_ano/assets/117688531/5d3493d9-a70f-4869-a676-b7ef0d4ab408)
+
 Localiza com base no id
 Finaliza o cadastro do usuario adicionando sua senha na tabela de autenticacao
 ![image](https://github.com/gustavo-specxx/chaellenge_java_2_ano/assets/117688531/590d5ee7-106d-42d2-90e9-ddfca8879187)
+
+
 POST: localhost:8081/usuarios/cadastro
+exemplo json: {
+  "email_cliente": "exemplo1@email.com",
+  "senha_cliente": "senhaa"
+}
+
 apos o usuario se cadastrar ele nao duplica os dados pela autenticacao implementada
 ![image](https://github.com/gustavo-specxx/chaellenge_java_2_ano/assets/117688531/38b5e0f9-835d-469c-86ec-cbef7e0e823a)
 
+Apos cadastrar o email e senha do usuario pode se realizar o login POST:localhost:8081/usuarios/login
+![image](https://github.com/gustavo-specxx/chaellenge_java_2_ano/assets/117688531/b9b352e1-598b-4d78-929a-cd373aefab14)
 
