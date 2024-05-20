@@ -56,15 +56,15 @@ public class ClienteController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<?> consultarclientePorId(@PathVariable Long id) {
+    public ResponseEntity<?> consultarClientePorId(@PathVariable Long id) {
         try {
             Optional<Cliente> clienteOptional = clirepo.findById(id);
-            if(clienteOptional.isPresent()) {
+            if (clienteOptional.isPresent()) {
                 return ResponseEntity.ok(clienteOptional.get());
             } else {
                 return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Cliente com o ID " + id + " não encontrado");
             }
-        } catch(Exception e) {
+        } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Erro ao consultar cliente por ID: " + e.getMessage());
         }
     }

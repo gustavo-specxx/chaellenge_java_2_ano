@@ -10,6 +10,7 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
 
 @Entity
@@ -29,6 +30,7 @@ public class Produto {
 
     @ManyToOne
     @JoinColumn(name = "ID_CLIENTE")
+    @JsonBackReference
     private Cliente cliente;
 
     // Construtor padrão

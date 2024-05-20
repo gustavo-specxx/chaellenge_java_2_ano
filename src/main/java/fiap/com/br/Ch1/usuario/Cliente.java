@@ -1,13 +1,10 @@
-
 package fiap.com.br.Ch1.usuario;
-
 
 import java.util.Calendar;
 import java.util.List;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
@@ -18,44 +15,51 @@ import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
 
-
-
 @Entity
-@Table(name="TB_CLIENTE")
+@Table(name = "TB_CLIENTE")
 @SequenceGenerator(name = "CLI_SEQ", sequenceName = "TB_CLIENTE_SEQ", allocationSize = 1)
 public class Cliente {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "CLI_SEQ")
-    @Column(name="ID_CLIENTE")
+    @Column(name = "ID_CLIENTE")
     private Long id;
 
     @NotNull
-    @Size(min=2, max=255)
-    private String nome_cliente;
+    @Column(name = "NOME_CLIENTE")
+    private String nome;
 
     @Email
-    @Column(name="CPF_CLIENTE")
-    private String cpfCliente; // Renomeado para seguir o padrão JavaBeans
+    @Column(name = "CPF_CLIENTE")
+    private String cpfCliente;
 
     @NotNull
-    @Column(name="DATA_NASCIMENTO_CLIENTE")
-    private Calendar data_nascimento_cliente;
+    @Column(name = "DATA_NASCIMENTO_CLIENTE")
+    @JsonFormat(pattern = "dd/MM/yyyy")
+    private Calendar dataNascimentoCliente;
 
     @NotNull
-    @Column(name="GENERO_CLIENTE")
-    private String genero_cliente;
+    @Column(name = "GENERO_CLIENTE")
+    private String generoCliente;
 
     @OneToMany(mappedBy = "cliente", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Produto> produtos;
 
     @OneToMany(mappedBy = "cliente", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Avaliacao> avaliacoes;
+
+    // Construtor padrão
+    public Cliente() {
+    }
+
+    // Construtor com parâmetros
+    public Cliente(String nome) {
+        this.nome = nome;
+    }
 
     // Getters e setters
 
@@ -67,12 +71,12 @@ public class Cliente {
         this.id = id;
     }
 
-    public String getNome_cliente() {
-        return nome_cliente;
+    public String getNome() {
+        return nome;
     }
 
-    public void setNome_cliente(String nome_cliente) {
-        this.nome_cliente = nome_cliente;
+    public void setNome(String nome) {
+        this.nome = nome;
     }
 
     public String getCpfCliente() {
@@ -83,21 +87,20 @@ public class Cliente {
         this.cpfCliente = cpfCliente;
     }
 
-    @JsonFormat(pattern = "dd/MM/yyyy")
-    public Calendar getData_nascimento_cliente() {
-        return data_nascimento_cliente;
+    public Calendar getDataNascimentoCliente() {
+        return dataNascimentoCliente;
     }
 
-    public void setData_nascimento_cliente(Calendar data_nascimento_cliente) {
-        this.data_nascimento_cliente = data_nascimento_cliente;
+    public void setDataNascimentoCliente(Calendar dataNascimentoCliente) {
+        this.dataNascimentoCliente = dataNascimentoCliente;
     }
 
-    public String getGenero_cliente() {
-        return genero_cliente;
+    public String getGeneroCliente() {
+        return generoCliente;
     }
 
-    public void setGenero_cliente(String genero_cliente) {
-        this.genero_cliente = genero_cliente;
+    public void setGeneroCliente(String generoCliente) {
+        this.generoCliente = generoCliente;
     }
 
     public List<Produto> getProdutos() {
