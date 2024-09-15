@@ -1,71 +1,63 @@
 package fiap.com.br.Ch1.usuario;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
-import java.util.stream.Collectors;
-import java.util.stream.StreamSupport;
-import java.util.ArrayList;
-import java.util.List;
 
-@RestController
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import java.util.List;
+import java.util.Optional;
+
+@Controller
 @RequestMapping("/produtos")
 public class ProdutoController {
 
-    private List<Produto> produtos = new ArrayList<>();
-
     @Autowired
-    private ProdutoRepository Productrepo;
+    private ProdutoRepository produtoRepo;
 
+    // Listar Produtos
     @GetMapping
-    public List<Produto> produtoList(){
-        return StreamSupport.stream(Productrepo.findAll().spliterator(), false)
-                .collect(Collectors.toList());
+    public String listarProdutos(Model model) {
+        List<Produto> produtos = (List<Produto>) produtoRepo.findAll();
+        model.addAttribute("produtos", produtos);
+        return "produtos";  // Thymeleaf irá procurar por um template chamado "produtos.html"
     }
 
-
-    // Criar Produto
-    @PostMapping
-    public Produto criarProduto(@RequestBody Produto produto) {
-        produto.setId(generateNextId()); // Atribui um ID único
-        produtos.add(produto);
-        return produto;
+    // Exibir Formulário de Criação
+    @GetMapping("/novo")
+    public String exibirFormularioCriacao(Model model) {
+        model.addAttribute("produto", new Produto());
+        return "form-produto";  // Thymeleaf irá procurar por um template chamado "form-produto.html"
     }
 
-    // Atualizar Produto
-    @PutMapping("/{id}")
-    public Produto atualizarProduto(@PathVariable Long id, @RequestBody Produto produto) {
-        Produto produtoExistente = produtos.stream()
-                .filter(p -> p.getId().equals(id))
-                .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("Produto não encontrado"));
-
-        produtoExistente.setNome(produto.getNome());
-        produtoExistente.setDescricao(produto.getDescricao());
-        // Atualize outros atributos, se necessário
-
-        return produtoExistente;
+    // Criar ou Atualizar Produto
+    @PostMapping("/salvar")
+    public String salvarProduto(@ModelAttribute Produto produto) {
+        produtoRepo.save(produto);
+        return "redirect:/produtos";  // Redireciona de volta para a página de listagem de produtos
     }
 
-    // Excluir Produto
-    @DeleteMapping("/{id}")
-    public void excluirProduto(@PathVariable Long id) {
-        produtos.removeIf(p -> p.getId().equals(id));
+    // Exibir Formulário de Edição
+    @GetMapping("/editar/{id}")
+    public String exibirFormularioEdicao(@PathVariable Long id, Model model) {
+        Optional<Produto> produto = produtoRepo.findById(id);
+        if (produto.isPresent()) {
+            model.addAttribute("produto", produto.get());
+            return "form-produto";  // Reutiliza o formulário de criação para edição
+        } else {
+            return "redirect:/produtos";  // Se o produto não for encontrado, redireciona para a listagem
+        }
     }
 
-    // Consultar Produto por ID
-    @GetMapping("/{id}")
-    public Produto consultarProdutoPorId(@PathVariable Long id) {
-        return produtos.stream()
-                .filter(p -> p.getId().equals(id))
-                .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("Produto não encontrado"));
-    }
-
-    // Método privado para gerar o próximo ID
-    private Long generateNextId() {
-        Long maxId = produtos.stream()
-                .mapToLong(Produto::getId)
-                .max()
-                .orElse(0L);
-        return maxId + 1;
+    @PostMapping("/excluir/{id}")
+    public String excluirProduto(@PathVariable("id") Long id, RedirectAttributes redirectAttributes) {
+        try {
+            produtoRepo.deleteById(id);
+            redirectAttributes.addFlashAttribute("message", "Produto excluído com sucesso.");
+        } catch (Exception e) {
+            redirectAttributes.addFlashAttribute("error", "Erro ao excluir o produto.");
+        }
+        return "redirect:/produtos";
     }
 }

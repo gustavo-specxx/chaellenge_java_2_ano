@@ -1,12 +1,9 @@
 package fiap.com.br.Ch1.usuario;
 
-import java.util.Calendar;
+import java.time.LocalDate;
 import java.util.List;
 
-import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
-
-import com.fasterxml.jackson.annotation.JsonFormat;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -16,16 +13,14 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
-import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "TB_CLIENTE")
-@SequenceGenerator(name = "CLI_SEQ", sequenceName = "TB_CLIENTE_SEQ", allocationSize = 1)
 public class Cliente {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "CLI_SEQ")
+    @GeneratedValue(strategy = GenerationType.IDENTITY) // Use apenas esta linha para IDs auto-gerados
     @Column(name = "ID_CLIENTE")
     private Long id;
 
@@ -33,21 +28,17 @@ public class Cliente {
     @Column(name = "NOME_CLIENTE")
     private String nome;
 
-    @Email
+    @NotNull
     @Column(name = "CPF_CLIENTE")
     private String cpfCliente;
 
     @NotNull
     @Column(name = "DATA_NASCIMENTO_CLIENTE")
-    @JsonFormat(pattern = "dd/MM/yyyy")
-    private Calendar dataNascimentoCliente;
+    private LocalDate dataNascimentoCliente;
 
     @NotNull
     @Column(name = "GENERO_CLIENTE")
     private String generoCliente;
-
-    @OneToMany(mappedBy = "cliente", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<Produto> produtos;
 
     @OneToMany(mappedBy = "cliente", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Avaliacao> avaliacoes;
@@ -57,8 +48,11 @@ public class Cliente {
     }
 
     // Construtor com parâmetros
-    public Cliente(String nome) {
+    public Cliente(String nome, String cpfCliente, LocalDate dataNascimentoCliente, String generoCliente) {
         this.nome = nome;
+        this.cpfCliente = cpfCliente;
+        this.dataNascimentoCliente = dataNascimentoCliente;
+        this.generoCliente = generoCliente;
     }
 
     // Getters e setters
@@ -87,11 +81,11 @@ public class Cliente {
         this.cpfCliente = cpfCliente;
     }
 
-    public Calendar getDataNascimentoCliente() {
+    public LocalDate getDataNascimentoCliente() {
         return dataNascimentoCliente;
     }
 
-    public void setDataNascimentoCliente(Calendar dataNascimentoCliente) {
+    public void setDataNascimentoCliente(LocalDate dataNascimentoCliente) {
         this.dataNascimentoCliente = dataNascimentoCliente;
     }
 
@@ -101,14 +95,6 @@ public class Cliente {
 
     public void setGeneroCliente(String generoCliente) {
         this.generoCliente = generoCliente;
-    }
-
-    public List<Produto> getProdutos() {
-        return produtos;
-    }
-
-    public void setProdutos(List<Produto> produtos) {
-        this.produtos = produtos;
     }
 
     public List<Avaliacao> getAvaliacoes() {

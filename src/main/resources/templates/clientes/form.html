@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title th:text="${cliente.id != null ? 'Editar Cliente' : 'Novo Cliente'}">Cadastro de Cliente</title>
+</head>
+<body>
+<h1 th:text="${cliente.id != null ? 'Editar Cliente' : 'Novo Cliente'}"></h1>
+
+<form th:action="@{/clientes/salvar}" th:object="${cliente}" method="post">
+    <!-- Campo oculto para ID do cliente -->
+    <input type="hidden" th:field="*{id}" />
+
+    <div>
+        <label for="nome">Nome:</label>
+        <input type="text" id="nome" th:field="*{nome}" />
+        <span th:if="${#fields.hasErrors('nome')}" th:errors="*{nome}"></span>
+    </div>
+    <div>
+        <label for="cpfCliente">CPF:</label>
+        <input type="text" id="cpfCliente" th:field="*{cpfCliente}" />
+        <span th:if="${#fields.hasErrors('cpfCliente')}" th:errors="*{cpfCliente}"></span>
+    </div>
+    <div>
+        <label for="dataNascimentoCliente">Data de Nascimento:</label>
+        <input type="date" id="dataNascimentoCliente" th:field="*{dataNascimentoCliente}" />
+        <span th:if="${#fields.hasErrors('dataNascimentoCliente')}" th:errors="*{dataNascimentoCliente}"></span>
+    </div>
+    <div>
+        <label for="generoCliente">Gênero:</label>
+        <input type="text" id="generoCliente" th:field="*{generoCliente}" />
+        <span th:if="${#fields.hasErrors('generoCliente')}" th:errors="*{generoCliente}"></span>
+    </div>
+    <div>
+        <input type="submit" value="Salvar" />
+    </div>
+</form>
+
+<a href="/clientes">Voltar para lista</a>
+
+<div th:if="${errorMessage}">
+    <p th:text="${errorMessage}"></p>
+</div>
+</body>
+</html>

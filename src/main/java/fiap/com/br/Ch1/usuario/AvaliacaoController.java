@@ -1,67 +1,71 @@
 package fiap.com.br.Ch1.usuario;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import java.util.ArrayList;
-import java.util.List;
 
-@RestController
+import javax.validation.Valid;
+import java.util.List;
+import java.util.Optional;
+
+@Controller
 @RequestMapping("/avaliacoes")
 public class AvaliacaoController {
 
-
     @Autowired
     private AvaliacaoResository avarepo;
-    private List<Avaliacao> avaliacoes = new ArrayList<>();
 
-    // Função: Read - Geral
-    @GetMapping("/Listar")
-    public List<Avaliacao> listarAvaliacoes(){
-        return (List<Avaliacao>) avarepo.findAll();
+    // Listar Avaliações
+    @GetMapping
+    public String listarAvaliacoes(Model model) {
+        List<Avaliacao> avaliacoes = (List<Avaliacao>) avarepo.findAll();
+        model.addAttribute("avaliacoes", avaliacoes);
+        return "avaliacoes";  // Thymeleaf irá procurar por um template chamado "avaliacoes.html"
     }
 
-    // Função: Create
-    @PostMapping
-    public Avaliacao criarAvaliacao(@RequestBody Avaliacao avaliacao) {
-        avaliacao.setIdAvaliacoes(generateNextId()); // atribui um ID único
-        avaliacoes.add(avaliacao);
-        return avaliacao;
+    // Exibir Formulário de Criação
+    @GetMapping("/novo")
+    public String exibirFormularioCriacao(Model model) {
+        model.addAttribute("avaliacao", new Avaliacao());
+        return "form-avaliacao";  // Thymeleaf irá procurar por um template chamado "form-avaliacao.html"
     }
 
-
-    // Função: Update
-    @PutMapping("/{id}")
-    public Avaliacao atualizarAvaliacao(@PathVariable Long id, @RequestBody Avaliacao novaAvaliacao) {
-        Avaliacao avaliacaoExistente = avaliacoes.stream()
-                .filter(a -> a.getIdAvaliacoes().equals(id))
-                .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("Avaliação não encontrada"));
-
-        avaliacaoExistente.setIdAvaliacoes(novaAvaliacao.getIdAvaliacoes());
-        // atualize outros atributos se necessário
-
-        return avaliacaoExistente;
-    }
-    // Função: Delete
-    @DeleteMapping("/{id}")
-    public void excluirAvaliacao(@PathVariable Long id) {
-        avaliacoes.removeIf(a -> a.getIdAvaliacoes().equals(id));
+    // Criar ou Atualizar Avaliação
+    @PostMapping("/salvar")
+    public String salvarAvaliacao(@Valid @ModelAttribute Avaliacao avaliacao) {
+        avarepo.save(avaliacao);
+        return "redirect:/avaliacoes";  // Redireciona de volta para a página de listagem de avaliações
     }
 
-    // Função: Read - ID específico
+    // Exibir Formulário de Edição
+    @GetMapping("/editar/{id}")
+    public String exibirFormularioEdicao(@PathVariable Long id, Model model) {
+        Optional<Avaliacao> avaliacao = avarepo.findById(id);
+        if (avaliacao.isPresent()) {
+            model.addAttribute("avaliacao", avaliacao.get());
+            return "form-avaliacao";  // Reutiliza o formulário de criação para edição
+        } else {
+            return "redirect:/avaliacoes";  // Se a avaliação não for encontrada, redireciona para a listagem
+        }
+    }
+
+    // Excluir Avaliação
+    @GetMapping("/excluir/{id}")
+    public String excluirAvaliacao(@PathVariable Long id) {
+        avarepo.deleteById(id);
+        return "redirect:/avaliacoes";
+    }
+
+    // Consultar Avaliação por ID
     @GetMapping("/{id}")
-    public Avaliacao consultarAvaliacaoPorId(@PathVariable Long id) {
-        return avaliacoes.stream()
-                .filter(a -> a.getIdAvaliacoes().equals(id))
-                .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("Avaliação não encontrada"));
-    }
-
-    private Long generateNextId() {
-        Long maxId = avaliacoes.stream()
-                .mapToLong(Avaliacao::getIdAvaliacoes)
-                .max()
-                .orElse(0L);
-        return maxId + 1;
+    public String consultarAvaliacaoPorId(@PathVariable Long id, Model model) {
+        Optional<Avaliacao> avaliacao = avarepo.findById(id);
+        if (avaliacao.isPresent()) {
+            model.addAttribute("avaliacao", avaliacao.get());
+            return "avaliacao-detalhes";  // Exibe os detalhes da avaliação em um novo template
+        } else {
+            return "redirect:/avaliacoes";
+        }
     }
 }

@@ -1,71 +1,64 @@
-
 package fiap.com.br.Ch1.usuario;
 
-
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
-
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.ModelAttribute;
 
+import java.util.List;
 
-@RestController
+@Controller
 @RequestMapping("/clientes")
 public class ClienteController {
 
     @Autowired
-    private ClienteRepository clirepo;
+    private ClienteRepository clienteRepository;
 
     @GetMapping
-    public List<Cliente> listarClientes(){
-        return clirepo.findAll();
+    public String listarClientes(Model model) {
+        List<Cliente> clientes = clienteRepository.findAll();
+        model.addAttribute("clientes", clientes);
+        return "clientes/lista";
     }
 
-    @PostMapping
-    public ResponseEntity<String> adicionarCliente(@RequestBody Cliente cliente) {
-        try {
-            // Verificar se o cliente já existe
-            Cliente clienteExistente = clirepo.findByCpfCliente(cliente.getCpfCliente());
-            if (clienteExistente != null) {
-                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Cliente já existe");
-            }
-
-            // Definir o novo id_cliente e salvar o cliente
-            clirepo.save(cliente);
-
-            return ResponseEntity.ok("Cliente criado com sucesso");
-
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Erro ao adicionar cliente: " + e.getMessage());
-        }
+    @GetMapping("/novo")
+    public String novoClienteForm(Model model) {
+        model.addAttribute("cliente", new Cliente());
+        return "clientes/form";
     }
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<String> excluirCliente(@PathVariable Long id) {
+    @PostMapping("/salvar")
+    public String salvarCliente(@ModelAttribute("cliente") Cliente cliente, Model model) {
         try {
-            clirepo.deleteById(id);
-            return ResponseEntity.ok("Cliente eliminado com sucesso");
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Erro ao remover cliente: " + e.getMessage());
-        }
-    }
-
-    @GetMapping("/{id}")
-    public ResponseEntity<?> consultarClientePorId(@PathVariable Long id) {
-        try {
-            Optional<Cliente> clienteOptional = clirepo.findById(id);
-            if (clienteOptional.isPresent()) {
-                return ResponseEntity.ok(clienteOptional.get());
+            if (cliente.getId() != null && clienteRepository.existsById(cliente.getId())) {
+                // Atualiza cliente existente
+                clienteRepository.save(cliente);
             } else {
-                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Cliente com o ID " + id + " não encontrado");
+                // Cria novo cliente
+                clienteRepository.save(cliente);
             }
+            return "redirect:/clientes";
         } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Erro ao consultar cliente por ID: " + e.getMessage());
+            model.addAttribute("errorMessage", "Erro ao salvar cliente: " + e.getMessage());
+            return "clientes/form";
         }
+    }
+
+    @GetMapping("/editar/{id}")
+    public String editarClienteForm(@PathVariable Long id, Model model) {
+        Cliente cliente = clienteRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Cliente inválido: " + id));
+        model.addAttribute("cliente", cliente);
+        return "clientes/form";
+    }
+
+    @GetMapping("/excluir/{id}")
+    public String excluirCliente(@PathVariable Long id) {
+        clienteRepository.deleteById(id);
+        return "redirect:/clientes";
     }
 }

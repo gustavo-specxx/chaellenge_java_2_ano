@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Lista de Avaliações</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+<div class="container mt-4">
+    <h1>Lista de Avaliações</h1>
+    <table class="table table-striped">
+        <thead>
+        <!-- Botão para voltar para a Home -->
+        <a href="/home" class="btn btn-secondary mb-3">Voltar para a Home</a>
+        <tr>
+            <th>ID</th>
+            <th>ID IA</th>
+            <th>Comentário</th>
+            <th>Data da Avaliação</th>
+            <th>Ações</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="avaliacao : ${avaliacoes}">
+            <td th:text="${avaliacao.idAvaliacoes}"></td>
+            <td th:text="${avaliacao.idIa}"></td>
+            <td th:text="${avaliacao.comentario}"></td>
+            <td th:text="${#dates.format(avaliacao.dataAvaliacao.time, 'dd/MM/yyyy')}"></td>
+            <td>
+                <form th:action="@{'/avaliacoes/excluir/' + ${avaliacao.idAvaliacoes}}" method="post" style="display:inline;">
+                    <input type="hidden" name="_method" value="delete" />
+                    <button type="submit" class="btn btn-danger btn-sm">Excluir</button>
+                </form>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+</body>
+</html>

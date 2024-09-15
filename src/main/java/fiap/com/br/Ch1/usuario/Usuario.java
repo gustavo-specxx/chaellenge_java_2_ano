@@ -20,7 +20,7 @@ public class Usuario {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "usuario_seq")
     @SequenceGenerator(name = "usuario_seq", sequenceName = "usuario_seq", allocationSize = 1)
-    @Column(name = "ID_AUTENTICA")
+    @Column(name = "ID_CLIENTE")
     private Long id;
 
     @NotNull(message = "O e-mail do usuário é obrigatório")

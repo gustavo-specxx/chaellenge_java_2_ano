@@ -2,8 +2,8 @@ package fiap.com.br.Ch1.usuario;
 
 import java.util.Calendar;
 
-import javax.validation.constraints.Max;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -21,7 +21,7 @@ import jakarta.persistence.Table;
 public class Avaliacao {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "FEEDBACK_SEQ")
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "AVALIACAO_SEQ")
     @Column(name="ID_AVALIACOES")
     private Long idAvaliacoes;
 
@@ -37,7 +37,7 @@ public class Avaliacao {
 
     @Column(name="COMENTARIO", length=500)
     @NotNull
-    @Max(500)
+    @Size(max = 500)
     private String comentario;
 
     @Column(name="DATA_AVALIACAO")
@@ -52,6 +52,7 @@ public class Avaliacao {
     @JoinColumn(name="ID_PRODUTO")
     private Produto produto;
 
+    // Getters e Setters
     public Long getIdAvaliacoes() {
         return idAvaliacoes;
     }
@@ -98,5 +99,21 @@ public class Avaliacao {
 
     public void setDataAvaliacao(Calendar dataAvaliacao) {
         this.dataAvaliacao = dataAvaliacao;
+    }
+
+    public Cliente getCliente() {
+        return cliente;
+    }
+
+    public void setCliente(Cliente cliente) {
+        this.cliente = cliente;
+    }
+
+    public Produto getProduto() {
+        return produto;
+    }
+
+    public void setProduto(Produto produto) {
+        this.produto = produto;
     }
 }

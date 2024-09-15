@@ -7,7 +7,9 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface ClienteRepository extends JpaRepository<Cliente, Long> {
+
     Cliente findByCpfCliente(String cpfCliente);
-    @Query(value = "select cli_seq.nextval from dual", nativeQuery = true)
+
+    @Query(value = "SELECT CLI_SEQ.NEXTVAL FROM DUAL", nativeQuery = true)
     Long proximoIdCliente();
 }

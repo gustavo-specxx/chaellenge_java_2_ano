@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Página Inicial</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            background-color: #f8f9fa;
+        }
+        .container {
+            margin-top: 40px;
+        }
+        .list-group-item {
+            font-size: 18px;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1 class="mb-4">Página Inicial</h1>
+    <div class="list-group">
+        <a href="/clientes" class="list-group-item list-group-item-action">Lista de Clientes</a>
+        <a href="/produtos" class="list-group-item list-group-item-action">Lista de Produtos</a>
+        <a href="/avaliacoes" class="list-group-item list-group-item-action">Lista de Avaliações</a>
+        <!-- Adicione outros links aqui conforme necessário -->
+    </div>
+</div>
+
+<!-- Adicione os scripts do Bootstrap no final do body -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

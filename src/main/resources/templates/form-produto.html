@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Formulário de Produto</title>
+</head>
+<body>
+<h1>Formulário de Produto</h1>
+<form th:action="@{/produtos/salvar}" th:object="${produto}" method="post">
+    <!-- Adiciona um campo oculto para o ID do produto, necessário para atualizações -->
+    <input type="hidden" th:field="*{id}" />
+
+    <label for="nome">Nome:</label>
+    <input type="text" id="nome" th:field="*{nome}" required />
+
+    <label for="preco">Preço:</label>
+    <input type="number" id="preco" th:field="*{preco}" required />
+
+    <label for="tipo">Tipo:</label>
+    <input type="text" id="tipo" th:field="*{tipo}" required />
+
+    <label for="descricao">Descrição:</label>
+    <input type="text" id="descricao" th:field="*{descricao}" required />
+
+    <button type="submit">Salvar</button>
+</form>
+</body>
+</html>
