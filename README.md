@@ -7,21 +7,49 @@ são então armazenadas em um banco de dados centralizado. O objetivo é fornece
 insights detalhados sobre produtos, permitindo a identificação de padrões de 
 qualidade e defeitos, e, assim, apoiar a tomada de decisões para melhorar e alavancar 
 vendas e desempenho de produtos. 
-Funcionalidades 
-Coleta de Dados 
-Anteriormente, a inserção de dados no sistema era feita manualmente, o que envolvia 
-a criação e atualização de avaliações por meio de endpoints testados via Postman. 
-Agora, a aplicação utiliza um sistema de web scraping para automatizar esse processo. 
-O web scraper coleta avaliações e reclamações diretamente de marketplaces e insere 
-essas informações no banco de dados, eliminando a necessidade de inserção manual 
-e garantindo que os dados sejam atualizados em tempo real. 
-Interface do Usuário 
-A entrega anterior usava Postman para testar endpoints da API e gerenciar avaliações. 
-No novo sistema, a interface do usuário foi aprimorada utilizando Thymeleaf com o 
-padrão MVC. A aplicação agora apresenta telas dinâmicas para a gestão de avaliações, 
-produtos e clientes. Com o uso de Thymeleaf, a interação com a aplicação se tornou 
-mais intuitiva e acessível, proporcionando uma experiência de usuário mais rica e 
-interativa. 
+Durante esta última sprint, várias melhorias e novos recursos foram adicionados ao projeto,
+trazendo mudanças significativas em relação à versão anterior:
+1. Implementação de Autenticação e Segurança com Spring Security:
+○ Adicionamos funcionalidades de autenticação utilizando Spring Security, com
+gestão de perfis de segurança para diferenciar os acessos entre usuários
+comuns e administradores.
+○ Configuramos uma página de login personalizada e implementamos uma
+lógica de logout, garantindo que o sistema esteja seguro e acessível apenas
+para usuários autenticados.
+2. Gestão de Perfis e Acesso:
+○ Criamos perfis distintos de segurança: usuários comuns e administradores.
+Apenas administradores têm acesso a rotas específicas, como a gestão
+avançada de produtos e usuários.
+3. Integração com Inteligência Artificial:
+○ Implementamos um sistema de recomendação de produtos utilizando uma
+API de Inteligência Artificial (OpenAI). Agora, ao visualizar um produto, o
+sistema sugere automaticamente produtos semelhantes com base na
+descrição e nos dados existentes, aprimorando a experiência do usuário.
+○ Também adicionamos um botão em cada página de produto para que o
+usuário possa consultar a IA diretamente, caso tenha dúvidas sobre qual
+produto escolher.
+4. Recursos de Internacionalização:
+○ Implementamos recursos de internacionalização, permitindo que o sistema
+suporte múltiplos idiomas, oferecendo uma experiência mais acessível para
+usuários de diferentes regiões.
+5. Configuração de Mensageria:
+○ Adicionamos suporte a mensageria com a implementação de produtores e
+consumidores, garantindo a comunicação assíncrona entre diferentes partes
+do sistema, aumentando a eficiência e a escalabilidade.
+6. Monitoramento com Spring Boot Actuator:
+○ Utilizamos o Spring Boot Actuator para monitorar a aplicação, possibilitando
+uma melhor observação dos endpoints, métricas e informações sobre o
+estado da aplicação, auxiliando na manutenção e resolução de problemas.
+7. Padronização dos Templates e Integração com Bootstrap:
+○ Todos os templates da aplicação foram padronizados utilizando Bootstrap,
+garantindo um design consistente e responsivo, proporcionando uma melhor
+experiência visual e usabilidade aos usuários.
+○ Adicionamos um botão "Dúvidas? Fale com o chat" em todos os templates,
+redirecionando o usuário para a página de interação com a IA, facilitando a
+navegação e promovendo o uso do sistema de recomendação inteligente.
+Essas mudanças melhoraram a segurança, a experiência do usuário e a eficiência do
+sistema, trazendo funcionalidades avançadas e modernas que aprimoram significativamente
+a aplicação em comparação com a versão anterior
 Endpoints e Funcionalidades 
 home
 ![image](https://github.com/user-attachments/assets/fa05db7c-d887-45f1-af26-0c8b8f99a4b8)
@@ -46,6 +74,11 @@ adicionar produto
 
 Lista de avaliacoes
 ![image](https://github.com/user-attachments/assets/ccdb9b23-90df-4362-a073-e413dd854e1b)
+
+Duvidas e recomendacao com o chatgpt
+![image](https://github.com/user-attachments/assets/3456cdd5-6301-4183-8d15-ca108836e66a)
+
+![image](https://github.com/user-attachments/assets/f76c896f-1e18-43cc-80f6-3d007b5d2cf8)
 
 
 A aplicação mantém a funcionalidade básica de gerenciar avaliações, produtos e 
