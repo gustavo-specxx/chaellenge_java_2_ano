@@ -1,27 +1,25 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Detalhes do Usuário</title>
+    <title>Recomendações de Produtos</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 </head>
 <body>
 <div class="container mt-4">
-    <h1>Detalhes do Usuário</h1>
-    <div class="card">
+    <h1>Recomendações para o Produto: <span th:text="${produto.nome}"></span></h1>
+    <div class="card mt-3">
         <div class="card-body">
-            <dl class="row">
-                <dt class="col-sm-3">ID</dt>
-                <dd class="col-sm-9" th:text="${usuario.id}"></dd>
-
-                <dt class="col-sm-3">Email</dt>
-                <dd class="col-sm-9" th:text="${usuario.email}"></dd>
-            </dl>
+            <h3>Descrição: <span th:text="${produto.descricao}"></span></h3>
+            <h3>Preço: R$ <span th:text="${produto.preco}"></span></h3>
         </div>
     </div>
 
+    <h2 class="mt-4">Produtos Recomendados pelo Sistema</h2>
+    <div class="alert alert-info" role="alert" th:text="${recomendacaoChatGPT}"></div>
+
     <!-- Botões de navegação -->
     <div class="mt-4">
-        <a href="/usuarios" class="btn btn-secondary">Voltar para a lista</a>
+        <a href="/produtos" class="btn btn-secondary">Voltar para Lista de Produtos</a>
         <a href="/chatgpt" class="btn btn-info">Dúvidas? Fale com o Chat</a>
     </div>
 </div>

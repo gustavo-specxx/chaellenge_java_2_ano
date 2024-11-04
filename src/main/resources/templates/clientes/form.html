@@ -2,43 +2,75 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <title th:text="${cliente.id != null ? 'Editar Cliente' : 'Novo Cliente'}">Cadastro de Cliente</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-MA6jcoH/Ep0Y6ARcDRA2FJQU1caTItKHbxamkGF5D5R/xr1lb9yM/p3yy1TOB4Ho" crossorigin="anonymous">
 </head>
-<body>
+<body class="container mt-5">
 <h1 th:text="${cliente.id != null ? 'Editar Cliente' : 'Novo Cliente'}"></h1>
 
-<form th:action="@{/clientes/salvar}" th:object="${cliente}" method="post">
+<form th:action="@{/clientes/salvar}" th:object="${cliente}" method="post" class="needs-validation" novalidate>
     <!-- Campo oculto para ID do cliente -->
     <input type="hidden" th:field="*{id}" />
 
-    <div>
+    <div class="form-group">
         <label for="nome">Nome:</label>
-        <input type="text" id="nome" th:field="*{nome}" />
-        <span th:if="${#fields.hasErrors('nome')}" th:errors="*{nome}"></span>
+        <input type="text" id="nome" th:field="*{nome}" class="form-control" required />
+        <div class="invalid-feedback" th:if="${#fields.hasErrors('nome')}" th:errors="*{nome}"></div>
     </div>
-    <div>
+
+    <div class="form-group">
         <label for="cpfCliente">CPF:</label>
-        <input type="text" id="cpfCliente" th:field="*{cpfCliente}" />
-        <span th:if="${#fields.hasErrors('cpfCliente')}" th:errors="*{cpfCliente}"></span>
+        <input type="text" id="cpfCliente" th:field="*{cpfCliente}" class="form-control" required />
+        <div class="invalid-feedback" th:if="${#fields.hasErrors('cpfCliente')}" th:errors="*{cpfCliente}"></div>
     </div>
-    <div>
+
+    <div class="form-group">
         <label for="dataNascimentoCliente">Data de Nascimento:</label>
-        <input type="date" id="dataNascimentoCliente" th:field="*{dataNascimentoCliente}" />
-        <span th:if="${#fields.hasErrors('dataNascimentoCliente')}" th:errors="*{dataNascimentoCliente}"></span>
+        <input type="date" id="dataNascimentoCliente" th:field="*{dataNascimentoCliente}" class="form-control" required />
+        <div class="invalid-feedback" th:if="${#fields.hasErrors('dataNascimentoCliente')}" th:errors="*{dataNascimentoCliente}"></div>
     </div>
-    <div>
+
+    <div class="form-group">
         <label for="generoCliente">Gênero:</label>
-        <input type="text" id="generoCliente" th:field="*{generoCliente}" />
-        <span th:if="${#fields.hasErrors('generoCliente')}" th:errors="*{generoCliente}"></span>
+        <select id="generoCliente" th:field="*{generoCliente}" class="form-control" required>
+            <option value="">Selecione...</option>
+            <option value="Masculino">Masculino</option>
+            <option value="Feminino">Feminino</option>
+            <option value="Outro">Outro</option>
+        </select>
+        <div class="invalid-feedback" th:if="${#fields.hasErrors('generoCliente')}" th:errors="*{generoCliente}"></div>
     </div>
-    <div>
-        <input type="submit" value="Salvar" />
+
+    <div class="form-group">
+        <input type="submit" value="Salvar" class="btn btn-primary" />
+        <a href="/clientes" class="btn btn-secondary">Voltar para lista</a>
     </div>
 </form>
 
-<a href="/clientes">Voltar para lista</a>
+<div class="alert alert-danger mt-3" th:if="${errorMessage}" th:text="${errorMessage}"></div>
 
-<div th:if="${errorMessage}">
-    <p th:text="${errorMessage}"></p>
+<!-- Botão para direcionar ao Chat -->
+<div class="mt-4">
+    <a href="/chatgpt" class="btn btn-info">Dúvidas? Fale com o ChatGPT sobre este produto</a>
 </div>
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-LtrjvnR4/JqsD6n6nF6xIaL4Yf4jwhZZm+8i3RpuQ8NIWT9IMXN6umljI4EZxM44" crossorigin="anonymous"></script>
+<script>
+    (function() {
+        'use strict';
+        window.addEventListener('load', function() {
+            var forms = document.getElementsByClassName('needs-validation');
+            Array.prototype.filter.call(forms, function(form) {
+                form.addEventListener('submit', function(event) {
+                    if (form.checkValidity() === false) {
+                        event.preventDefault();
+                        event.stopPropagation();
+                    }
+                    form.classList.add('was-validated');
+                }, false);
+            });
+        }, false);
+    })();
+</script>
 </body>
 </html>

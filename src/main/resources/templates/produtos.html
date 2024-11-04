@@ -7,10 +7,17 @@
 <body>
 <div class="container mt-4">
     <h1>Lista de Produtos</h1>
+
+    <!-- Botões de navegação -->
+    <div class="mb-3">
+        <a href="/home" class="btn btn-secondary">Voltar para a Home</a>
+        <a href="/produtos/novo" class="btn btn-primary">Adicionar Produto</a>
+        <a href="/chatgpt" class="btn btn-info">Dúvidas? Fale com o Chat</a>
+    </div>
+
+    <!-- Tabela de Produtos -->
     <table class="table table-striped">
         <thead>
-        <a href="/home" class="btn btn-secondary mb-3">Voltar para a Home</a>
-        <a href="/produtos/novo" class="btn btn-primary">Adicionar Produto</a>
         <tr>
             <th>ID</th>
             <th>Nome</th>
@@ -34,5 +41,10 @@
         </tbody>
     </table>
 </div>
+
+<!-- Scripts do Bootstrap -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 </html>

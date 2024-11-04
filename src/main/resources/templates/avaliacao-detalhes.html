@@ -5,8 +5,9 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 </head>
 <body>
-<div class="container">
-    <h1>Detalhes da Avaliação</h1>
+<div class="container my-5">
+    <h1 class="mb-4">Detalhes da Avaliação</h1>
+
     <dl class="row">
         <dt class="col-sm-3">ID Avaliação</dt>
         <dd class="col-sm-9" th:text="${avaliacao.idAvaliacoes}"></dd>
@@ -20,7 +21,17 @@
         <dt class="col-sm-3">Data da Avaliação</dt>
         <dd class="col-sm-9" th:text="${#dates.format(avaliacao.dataAvaliacao.time, 'dd/MM/yyyy')}"></dd>
     </dl>
-    <a href="/avaliacoes" class="btn btn-secondary">Voltar para a lista</a>
+
+    <!-- Botões de Ação -->
+    <div class="d-flex justify-content-between mt-4">
+        <a href="/avaliacoes" class="btn btn-secondary">Voltar para a lista</a>
+        <a href="/chatgpt" class="btn btn-info">Dúvidas? Fale com o Chat</a>
+    </div>
 </div>
+
+<!-- Scripts do Bootstrap -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 </html>

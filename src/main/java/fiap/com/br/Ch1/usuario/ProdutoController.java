@@ -16,6 +16,9 @@ public class ProdutoController {
     @Autowired
     private ProdutoRepository produtoRepo;
 
+    @Autowired
+    private RecomendacaoService recomendacaoService;
+
     // Listar Produtos
     @GetMapping
     public String listarProdutos(Model model) {
@@ -50,6 +53,7 @@ public class ProdutoController {
         }
     }
 
+    // Excluir Produto
     @PostMapping("/excluir/{id}")
     public String excluirProduto(@PathVariable("id") Long id, RedirectAttributes redirectAttributes) {
         try {
@@ -59,5 +63,18 @@ public class ProdutoController {
             redirectAttributes.addFlashAttribute("error", "Erro ao excluir o produto.");
         }
         return "redirect:/produtos";
+    }
+
+    // Recomendação de Produtos
+    @GetMapping("/{id}/recomendacoes")
+    public String recomendarProdutos(@PathVariable Long id, Model model) {
+        Produto produto = produtoRepo.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Produto não encontrado: " + id));
+
+        String recomendacao = recomendacaoService.recomendarProdutosComChatGPT(produto);
+
+        model.addAttribute("produto", produto); // Adiciona informações do produto ao modelo para serem exibidas
+        model.addAttribute("recomendacaoChatGPT", recomendacao); // Adiciona a recomendação ao modelo
+        return "recomendacoes";  // Nome do template para exibir recomendações
     }
 }

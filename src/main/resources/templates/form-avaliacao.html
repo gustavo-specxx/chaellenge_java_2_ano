@@ -5,8 +5,9 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 </head>
 <body>
-<div class="container">
+<div class="container mt-4">
     <h1 th:text="${avaliacao.idAvaliacoes != null ? 'Editar Avaliação' : 'Nova Avaliação'}"></h1>
+
     <form th:action="@{/avaliacoes/salvar}" th:object="${avaliacao}" method="post">
         <div class="form-group">
             <label for="idIa">ID IA</label>
@@ -17,9 +18,19 @@
             <textarea id="comentario" name="comentario" class="form-control" th:field="*{comentario}" required></textarea>
         </div>
         <input type="hidden" th:field="*{idAvaliacoes}">
+
         <button type="submit" class="btn btn-primary">Salvar</button>
+        <a href="/avaliacoes" class="btn btn-secondary mt-2">Voltar para a lista</a>
     </form>
-    <a href="/avaliacoes" class="btn btn-secondary mt-2">Voltar para a lista</a>
+
+    <div class="mt-3">
+        <a href="/chatgpt" class="btn btn-info">Dúvidas? Fale com o Chat</a>
+    </div>
 </div>
+
+<!-- Scripts do Bootstrap -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 </html>

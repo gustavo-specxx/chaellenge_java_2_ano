@@ -2,26 +2,48 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>Formulário de Produto</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 </head>
 <body>
-<h1>Formulário de Produto</h1>
-<form th:action="@{/produtos/salvar}" th:object="${produto}" method="post">
-    <!-- Adiciona um campo oculto para o ID do produto, necessário para atualizações -->
-    <input type="hidden" th:field="*{id}" />
+<div class="container mt-4">
+    <h1 class="mb-4">Formulário de Produto</h1>
 
-    <label for="nome">Nome:</label>
-    <input type="text" id="nome" th:field="*{nome}" required />
+    <form th:action="@{/produtos/salvar}" th:object="${produto}" method="post">
+        <!-- Campo oculto para o ID do produto -->
+        <input type="hidden" th:field="*{id}" />
 
-    <label for="preco">Preço:</label>
-    <input type="number" id="preco" th:field="*{preco}" required />
+        <div class="form-group">
+            <label for="nome">Nome:</label>
+            <input type="text" id="nome" class="form-control" th:field="*{nome}" required />
+        </div>
 
-    <label for="tipo">Tipo:</label>
-    <input type="text" id="tipo" th:field="*{tipo}" required />
+        <div class="form-group">
+            <label for="preco">Preço:</label>
+            <input type="number" id="preco" class="form-control" th:field="*{preco}" required />
+        </div>
 
-    <label for="descricao">Descrição:</label>
-    <input type="text" id="descricao" th:field="*{descricao}" required />
+        <div class="form-group">
+            <label for="tipo">Tipo:</label>
+            <input type="text" id="tipo" class="form-control" th:field="*{tipo}" required />
+        </div>
 
-    <button type="submit">Salvar</button>
-</form>
+        <div class="form-group">
+            <label for="descricao">Descrição:</label>
+            <input type="text" id="descricao" class="form-control" th:field="*{descricao}" required />
+        </div>
+
+        <button type="submit" class="btn btn-primary">Salvar</button>
+        <a href="/produtos" class="btn btn-secondary">Voltar para lista de produtos</a>
+    </form>
+
+    <div class="mt-3">
+        <a href="/chatgpt" class="btn btn-info">Dúvidas? Fale com o Chat</a>
+    </div>
+</div>
+
+<!-- Scripts do Bootstrap -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 </html>
